@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Creation Details</title>
+</head>
+<body>
+    <div>
+        <a href="/logout" class="button">Logout</a>
+        <a href="/creations" class="button">Dashboard</a>
+    </div>
+    <div>
+        {% for creation in ind_creation %}
+            <div>
+                <p>{{creation['first_name']}} says: {{creation['message']}}</p>
+            </div>
+            <div>
+                {% if creation['thought_id'] in liked_creations %}
+                    <p><a href="/unlike/{{creation['creation_id']}}" class="button">Unlike</a></p>
+                {% else %}
+                    <p><a href="/like/{{creation['creation_id']}}" class="button">Like</a></p>
+                {% endif %}
+            </div>
+        {% endfor %}
+        {% for users_likes_creation in liked_users %}
+            <p>{{users_likes_creation['first_name']}} {{users_likes_creation['last_name']}}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

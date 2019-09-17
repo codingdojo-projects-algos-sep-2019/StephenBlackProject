@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Creation Board</title>
+</head>
+<body>
+    <div>
+        <h1>Welcome {{users[0]['first_name']}} {{users[0]['last_name']}}!</h1>
+        <a href="/logout" class="button">Logout</a>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{message}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div>
+        <form action="/post_creation" method ="POST">
+            <input type="text" name="creation_content">
+            <input type="submit" value ="Add Creation">
+        </form>
+    </div>
+    <div>
+        {% for creation in creations %}
+            <div>
+                <p>{{creation['first_name']}} Says: {{creation['message']}}</p>
+                <form action="/creation/{{creation['creation_id']}}/details", method ="POST">
+                    <input type="submit" value ="Details">
+                    <P>{{creation['likes']}}</P>
+                </form>
+            </div>
+            <div>
+                {% if creation['creation_id'] in had_creations %}
+                    <p><a href="/delete/{{creation['creation_id']}}" class="button">Delete</a></p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
